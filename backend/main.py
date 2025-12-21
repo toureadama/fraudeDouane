@@ -120,9 +120,9 @@ class PredictionResponse(BaseModel):
 def read_root():
     return {"message": "Fraud Detection API is running."}
 
-@app.get("/metadata")
-async def get_metadata():
-    return METADATA
+#@app.get("/metadata")
+#async def get_metadata():
+    #return METADATA
 
 @app.post("/predict")
 def predict(data: PredictionInput):
