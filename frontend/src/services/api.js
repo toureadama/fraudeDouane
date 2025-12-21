@@ -1,4 +1,4 @@
-const API_URL = 'https://fraudedouane.onrender.com' //'http://localhost:8000'; // Update with your backend URL (http://127.0.0.1:8000/
+const API_URL = 'cd' //'http://localhost:8000'; // Update with your backend URL (http://127.0.0.1:8000/
 
 export const fetchMetadata = async () => {
   const response = await fetch(`${API_URL}/metadata`);
