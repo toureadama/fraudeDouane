@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 import numpy as np
-import asyncio
+import pymysql
 #from douane_feat import COD_BANQUE, CODE_DECLARANT, CODE_NATURE_COLIS, CODE_OPERATEUR, CODE_PORT_CHARG, IDEN_MOY_TRANSP_ARRIVE, PROVENANCE
 
 # Set up constants
@@ -68,6 +68,77 @@ COD_BANQUE = ['ACB1', 'BAT1', 'BBG1', 'BDA', 'BDA1', 'BDU1', 'BGFI', 'BIC1', 'BN
               'BRM1', 'BSIC', 'C1188', 'CCP1', 'CIB1', 'CORB', 'DBCI', 'DISP', 'ECO1', 'GTB1', 'MAN1', 
               'NSIA', 'ORA1', 'SBCI', 'SCB1', 'SGB1', 'SGCI', 'SIB1', 'UBA1', 'VEBA'
               ]
+"""
+#********************************************************************************************************
+# Download database
+# Database connection details (replace with your own)
+host = "mysql-a54ef6c-toureadama-2bc0.c.aivencloud.com"
+user = "avnadmin"
+port = 15107
+password = "AVNS_O9FSI98GLiPqRHk5e0H"
+database = "douanesci_fraude"
+
+# Liste des tables à construire
+COD_BANQUE = []
+CODE_DECLARANT = []
+CODE_NATURE_COLIS = []
+CODE_OPERATEUR = []
+CODE_PORT_CHARG = []
+IDEN_MOY_TRANSP_ARRIVE = []
+PROVENANCE  = []
+list_table = ["COD_BANQUE", "CODE_DECLARANT", "CODE_NATURE_COLIS", "CODE_OPERATEUR",
+                   "CODE_PORT_CHARG", "IDEN_MOY_TRANSP_ARRIVE", "PROVENANCE"]
+list_table_name = [COD_BANQUE, CODE_DECLARANT, CODE_NATURE_COLIS, CODE_OPERATEUR,
+                   CODE_PORT_CHARG, IDEN_MOY_TRANSP_ARRIVE, PROVENANCE]
+
+def create_list(table_i):
+    # 3. Define the SQL query to select all records
+    query = f"SELECT * FROM {list_table[table_i]}"
+
+    # 4. Execute the query
+    cursor.execute(query)
+
+    # 5. Fetch all the results
+    # fetchall() returns a list of tuples, where each tuple is a row
+    result = cursor.fetchall()
+    list_table_name[table_i] = [row[1] for row in result]
+
+    return  list_table_name[table_i]
+
+try:
+    # 1. Establish a connection
+    conn = pymysql.connect(
+        host=host,
+        user=user,
+        port=port,
+        password=password,
+        database=database
+    )
+
+    if conn.open:
+        print("Connection to MySQL database established successfully.")
+        
+    # 2. Create a cursor object
+    cursor = conn.cursor()
+
+    for table_i in range(len(list_table_name)):
+        list_table_name[table_i] = create_list(table_i)
+        #print(list_table_name[table_i])
+
+except pymysql.MySQLError as e:
+    print(f"Error connecting to MySQL database: {e}")
+
+finally:
+    # 7. Close the cursor and connection (important cleanup step)
+    if 'cursor' in locals() and cursor is not None:
+        cursor.close()
+    if 'conn' in locals() and conn is not None:
+        conn.close()
+
+
+#********************************************************************************************************
+
+"""
 
 #model = joblib.load("C:/Users/HP 820 G3/Desktop/DOUANES CI/ANALYSE CONTENTIEUX/models/fraud_detection_model.pkl")
 model = joblib.load("fraud_detection_model.pkl")
@@ -120,9 +191,9 @@ class PredictionResponse(BaseModel):
 def read_root():
     return {"message": "Fraud Detection API is running."}
 
-#@app.get("/metadata")
-#async def get_metadata():
-    #return METADATA
+@app.get("/metadata")
+def get_metadata():
+    return METADATA
 
 @app.post("/predict")
 def predict(data: PredictionInput):
