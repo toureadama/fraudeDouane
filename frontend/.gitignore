@@ -1,2 +1,2 @@
-.vercel
 node_modules
+/fraud_app/backend/secrets.env

@@ -3,10 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import joblib
 import pandas as pd
-import numpy as np
 import pymysql
+from database import HOST, USER, PORT, PASSWORD, DATABASE
 #from douane_feat import COD_BANQUE, CODE_DECLARANT, CODE_NATURE_COLIS, CODE_OPERATEUR, CODE_PORT_CHARG, IDEN_MOY_TRANSP_ARRIVE, PROVENANCE
-
+"""
 # Set up constants
 CODE_DECLARANT = [
     '00045G', '00069Z', '00074L', '00085W', '00100R', '00106T', '00109N', '00114G', '00119E', '00167A', 
@@ -68,8 +68,16 @@ COD_BANQUE = ['ACB1', 'BAT1', 'BBG1', 'BDA', 'BDA1', 'BDU1', 'BGFI', 'BIC1', 'BN
               'BRM1', 'BSIC', 'C1188', 'CCP1', 'CIB1', 'CORB', 'DBCI', 'DISP', 'ECO1', 'GTB1', 'MAN1', 
               'NSIA', 'ORA1', 'SBCI', 'SCB1', 'SGB1', 'SGCI', 'SIB1', 'UBA1', 'VEBA'
               ]
-"""
+
 #********************************************************************************************************
+# Download database
+# Database connection details (replace with your own)
+host = HOST
+user = USER
+port = PORT 
+password = PASSWORD
+database = DATABASE
+"""
 
 # Liste des tables à construire
 COD_BANQUE = []
@@ -80,7 +88,7 @@ CODE_PORT_CHARG = []
 IDEN_MOY_TRANSP_ARRIVE = []
 PROVENANCE  = []
 list_table = ["COD_BANQUE", "CODE_DECLARANT", "CODE_NATURE_COLIS", "CODE_OPERATEUR",
-                   "CODE_PORT_CHARG", "IDEN_MOY_TRANSP_ARRIVE", "PROVENANCE"]
+              "CODE_PORT_CHARG", "IDEN_MOY_TRANSP_ARRIVE", "PROVENANCE"]
 list_table_name = [COD_BANQUE, CODE_DECLARANT, CODE_NATURE_COLIS, CODE_OPERATEUR,
                    CODE_PORT_CHARG, IDEN_MOY_TRANSP_ARRIVE, PROVENANCE]
 
@@ -101,11 +109,11 @@ def create_list(table_i):
 try:
     # 1. Establish a connection
     conn = pymysql.connect(
-        host=host,
-        user=user,
-        port=port,
-        password=password,
-        database=database
+        host=HOST,
+        user=USER,
+        port=PORT,
+        password=PASSWORD,
+        database=DATABASE
     )
 
     if conn.open:
@@ -131,7 +139,6 @@ finally:
 
 #********************************************************************************************************
 
-"""
 
 #model = joblib.load("C:/Users/HP 820 G3/Desktop/DOUANES CI/ANALYSE CONTENTIEUX/models/fraud_detection_model.pkl")
 model = joblib.load("fraud_detection_model.pkl")
