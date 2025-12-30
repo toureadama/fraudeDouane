@@ -70,13 +70,6 @@ COD_BANQUE = ['ACB1', 'BAT1', 'BBG1', 'BDA', 'BDA1', 'BDU1', 'BGFI', 'BIC1', 'BN
               ]
 """
 #********************************************************************************************************
-# Download database
-# Database connection details (replace with your own)
-host = "mysql-a54ef6c-toureadama-2bc0.c.aivencloud.com"
-user = "avnadmin"
-port = 15107
-password = "AVNS_O9FSI98GLiPqRHk5e0H"
-database = "douanesci_fraude"
 
 # Liste des tables à construire
 COD_BANQUE = []
