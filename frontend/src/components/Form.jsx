@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Box, Typography, Grid, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Button, TextField, Box, Typography, Grid, Autocomplete } from '@mui/material';
 
 function Form({ metadata, onSubmit, onReset }) {
   const [formData, setFormData] = useState({});
@@ -35,23 +35,22 @@ function Form({ metadata, onSubmit, onReset }) {
           </Grid>
           <Grid item xs={8}>
             {Array.isArray(values) && values.length > 0 ? (
-              <FormControl fullWidth size="small" margin="dense">
-                <InputLabel id={`${key}-label`} sx={{ fontSize: '0.75rem' }}>{/* label accessible */}</InputLabel>
-                <Select
-                  labelId={`${key}-label`}
-                  name={key}
-                  value={formData[key] ?? ''}
-                  onChange={handleChange}
-                  displayEmpty
-                >
-                  <MenuItem value="">
-                    <em>--</em>
-                  </MenuItem>
-                  {values.map((v, i) => (
-                    <MenuItem key={v ?? i} value={v}>{v}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <Autocomplete
+                freeSolo
+                options={values}
+                value={formData[key] ?? ''}
+                onChange={(_, newValue) => setFormData(prev => ({ ...prev, [key]: newValue ?? '' }))}
+                onInputChange={(_, newInput) => setFormData(prev => ({ ...prev, [key]: newInput ?? '' }))}
+                size="small"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    margin="dense"
+                    name={key}
+                    size="small"
+                  />
+                )}
+              />
             ) : (
               <TextField
                 fullWidth
@@ -79,3 +78,5 @@ function Form({ metadata, onSubmit, onReset }) {
 }
 
 export default Form;
+
+
