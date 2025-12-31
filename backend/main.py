@@ -25,7 +25,7 @@ FEATURES_IMPORTS = ['CODE_DECLARANT', 'CODE_OPERATEUR', 'PROVENANCE', 'CODE_NATU
 
 CLASS_NAMES = ['EXC', 'FDE', 'FDV', 'NON_FRAUDE']
 
-# Name of table to store predictions
+# Name of table to store predictions and input data
 PREDICTIONS_TABLE = "PREDICTIONS"
 
 # Globals to be populated on startup
