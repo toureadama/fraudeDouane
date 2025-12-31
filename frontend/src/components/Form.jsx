@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { Button, TextField, Box, Typography, Grid } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Button, TextField, Box, Typography, Grid, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 function Form({ metadata, onSubmit, onReset }) {
-  const [formData, setFormData] = useState({
-    CODE_DECLARANT: '',
-    CODE_OPERATEUR: '',
-    PROVENANCE: '',
-    CODE_NATURE_COLIS: '',
-    CODE_PORT_CHARG: '',
-    IDEN_MOY_TRANSP_ARRIVE: '',
-    COD_BANQUE: '',
-  });
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (!metadata) return;
+    const init = Object.keys(metadata).reduce((acc, k) => ({ ...acc, [k]: '' }), {});
+    setFormData(init);
+  }, [metadata]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,35 +21,48 @@ function Form({ metadata, onSubmit, onReset }) {
   };
 
   const handleReset = () => {
-    setFormData({
-      CODE_DECLARANT: '',
-      CODE_OPERATEUR: '',
-      PROVENANCE: '',
-      CODE_NATURE_COLIS: '',
-      CODE_PORT_CHARG: '',
-      IDEN_MOY_TRANSP_ARRIVE: '',
-      COD_BANQUE: '',
-    });
+    const init = Object.keys(metadata || {}).reduce((acc, k) => ({ ...acc, [k]: '' }), {});
+    setFormData(init);
     onReset();
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
-      {Object.entries(metadata).map(([key, values]) => (
+      {Object.entries(metadata || {}).map(([key, values]) => (
         <Grid container spacing={2} alignItems="center" key={key}>
           <Grid item xs={4}>
             <Typography textAlign="left" sx={{ fontSize: '0.75rem' }}>{key}</Typography>
           </Grid>
           <Grid item xs={8}>
-            <TextField
-              fullWidth
-              margin="dense"
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
-              required
-              size="small"
-            />
+            {Array.isArray(values) && values.length > 0 ? (
+              <FormControl fullWidth size="small" margin="dense">
+                <InputLabel id={`${key}-label`} sx={{ fontSize: '0.75rem' }}>{/* label accessible */}</InputLabel>
+                <Select
+                  labelId={`${key}-label`}
+                  name={key}
+                  value={formData[key] ?? ''}
+                  onChange={handleChange}
+                  displayEmpty
+                >
+                  <MenuItem value="">
+                    <em>--</em>
+                  </MenuItem>
+                  {values.map((v, i) => (
+                    <MenuItem key={v ?? i} value={v}>{v}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : (
+              <TextField
+                fullWidth
+                margin="dense"
+                name={key}
+                value={formData[key] ?? ''}
+                onChange={handleChange}
+                required
+                size="small"
+              />
+            )}
           </Grid>
         </Grid>
       ))}
