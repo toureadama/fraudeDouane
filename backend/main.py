@@ -1,26 +1,32 @@
 import logging
 from typing import Dict, List, Any, Optional
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Path, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, validator
 import joblib
 import pandas as pd
 import pymysql
 from datetime import datetime
-import secrets
+import os
+#from dotenv import load_dotenv
+#from pathlib import Path
+#from secrets import HOST, USER, PORT, PASSWORD, DATABASE
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 #Database connection details (replace with your own)
-HOST = secrets.HOST
-USER = secrets.USER
-PORT = secrets.PORT
-PASSWORD = secrets.PASSWORD 
-DATABASE = secrets.DATABASE
+#env_path = Path('.') / 'secrets' / '.env'
+#load_dotenv(dotenv_path=env_path)
+HOST = os.environ.get("HOST")
+USER = os.environ.get("USER")
+PORT = os.environ.get("PORT")
+PASSWORD = os.environ.get("PASSWORD")
+DATABASE = os.environ.get("DATABASE") 
 
+print(HOST, USER, PORT, PASSWORD, DATABASE)
 # Tables to fetch
 TABLES = [
     "COD_BANQUE", "CODE_DECLARANT", "CODE_NATURE_COLIS", "CODE_OPERATEUR",
