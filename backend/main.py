@@ -7,7 +7,7 @@ from pydantic import BaseModel, validator
 import joblib
 import pandas as pd
 import pymysql
-from database import HOST, USER, PORT, PASSWORD, DATABASE
+#from database import HOST, USER, PORT, PASSWORD, DATABASE
 from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
