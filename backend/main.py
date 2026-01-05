@@ -20,13 +20,13 @@ logger = logging.getLogger(__name__)
 #Database connection details (replace with your own)
 #env_path = Path('.') / 'secrets' / '.env'
 #load_dotenv(dotenv_path=env_path)
+
 HOST = os.environ.get("HOST")
 USER = os.environ.get("USER")
 PORT = os.environ.get("PORT")
 PASSWORD = os.environ.get("PASSWORD")
 DATABASE = os.environ.get("DATABASE") 
 
-print(HOST, USER, PORT, PASSWORD, DATABASE)
 # Tables to fetch
 TABLES = [
     "COD_BANQUE", "CODE_DECLARANT", "CODE_NATURE_COLIS", "CODE_OPERATEUR",
