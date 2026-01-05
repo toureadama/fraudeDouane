@@ -7,11 +7,19 @@ from pydantic import BaseModel, validator
 import joblib
 import pandas as pd
 import pymysql
-#from database import HOST, USER, PORT, PASSWORD, DATABASE
 from datetime import datetime
+import secrets
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+#Database connection details (replace with your own)
+HOST = secrets.HOST
+USER = secrets.USER
+PORT = secrets.PORT
+PASSWORD = secrets.PASSWORD 
+DATABASE = secrets.DATABASE
 
 # Tables to fetch
 TABLES = [
