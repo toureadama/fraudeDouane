@@ -29,7 +29,7 @@ USER = os.getenv("USER")
 PORT = int(os.getenv("PORT"))
 PASSWORD = os.getenv("PASSWORD")
 DATABASE = os.getenv("DATABASE") 
-print("PORT",  PORT, type(PORT))
+#print("PORT",  PORT, type(PORT))
 # Tables to fetch
 TABLES = [
     "COD_BANQUE", "CODE_DECLARANT", "CODE_NATURE_COLIS", "CODE_OPERATEUR",
