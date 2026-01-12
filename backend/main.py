@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 SECRETS_PATH = Path(__file__).resolve().parent.parent / "secrets" / "secrets.env"
 
 # Chargement des variables d'environnement
-load_dotenv(dotenv_path=SECRETS_PATH)
+load_dotenv() #dotenv_path=SECRETS_PATH)
 
 HOST = os.getenv("HOST")
 USER = os.getenv("USER")
