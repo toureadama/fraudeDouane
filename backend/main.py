@@ -26,10 +26,10 @@ load_dotenv() #dotenv_path=SECRETS_PATH)
 
 HOST = os.getenv("HOST")
 USER = os.getenv("USER")
-PORT = 15107 #int(os.getenv("PORT")[4:-1])
+PORT = int(os.getenv("PORT"))
 PASSWORD = os.getenv("PASSWORD")
 DATABASE = os.getenv("DATABASE") 
-#print("PORT",  PORT, type(PORT))
+print("PORT",  PORT, type(PORT))
 # Tables to fetch
 TABLES = [
     "COD_BANQUE", "CODE_DECLARANT", "CODE_NATURE_COLIS", "CODE_OPERATEUR",
