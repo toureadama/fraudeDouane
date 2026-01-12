@@ -26,7 +26,7 @@ load_dotenv(dotenv_path=SECRETS_PATH)
 
 HOST = os.getenv("HOST")
 USER = os.getenv("USER")
-PORT = int(os.getenv("PORT")[4:-1])
+PORT = 15107 #int(os.getenv("PORT")[4:-1])
 PASSWORD = os.getenv("PASSWORD")
 DATABASE = os.getenv("DATABASE") 
 #print("PORT",  PORT, type(PORT))
