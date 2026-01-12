@@ -19,17 +19,17 @@ logger = logging.getLogger(__name__)
 
 #Database connection details (replace with your own)
 # Chemin vers le fichier secrets.env
-SECRETS_PATH = Path(__file__).resolve().parent.parent / "secrets" / "secrets.env"
+#SECRETS_PATH = Path(__file__).resolve().parent.parent / "etc" / "secrets" / "secrets.env"
 
 # Chargement des variables d'environnement
 load_dotenv() #dotenv_path=SECRETS_PATH)
 
 HOST = os.getenv("HOST")
 USER = os.getenv("USER")
-PORT = int(os.getenv("PORT"))
+PORT = int(os.getenv("PORT") if os.getenv("PORT").isdigit() else os.getenv("PORT")[4:-1])
 PASSWORD = os.getenv("PASSWORD")
 DATABASE = os.getenv("DATABASE") 
-#print("PORT",  PORT, type(PORT))
+print("PORT",  PORT, type(PORT))
 # Tables to fetch
 TABLES = [
     "COD_BANQUE", "CODE_DECLARANT", "CODE_NATURE_COLIS", "CODE_OPERATEUR",
