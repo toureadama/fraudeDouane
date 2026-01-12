@@ -1,2 +1,4 @@
 node_modules
 /fraud_app/backend/secrets.env
+/fraud_app/backend/secrets/secrets.env
+/fraud_app/backend/etc/secrets/secrets.env
